@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,29 +29,19 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class categories extends ListFragment {
+public class CategoriesFragment extends ListFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        // inflater
-        View inflaterCategories = inflater.inflate(R.layout.fragment_categories, container, false);
-
-        final TextView mTextView = getListView().findViewById(R.id.textView1);
-
-
-/*
+        /*
  Volley things, using ref:
  https://apps.mprog.nl/android/volley
  https://stackoverflow.com/questions/17037340/converting-jsonarray-to-arraylist
@@ -60,22 +51,32 @@ public class categories extends ListFragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         String url ="https://resto.mprog.nl/categories";
 
-        final ArrayList<String> myArray = new ArrayList<>();
+        final List<String> myArray = new ArrayList<>();
+
+        //final ArrayList<String> myArray = new ArrayList<>();
+        final ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(
+                        getActivity(),
+                        android.R.layout.simple_list_item_1,
+                        myArray);
+
+
+
 
 
 // Request a string response from the provided URL.
         JsonObjectRequest jsObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                    private ArrayAdapter<String> adapter;
+                    //private ArrayAdapter<String> adapter;
 
-                    public void setAdapter(ArrayAdapter<String> adapter) {
-                        this.adapter = adapter;
-                    }
+                    //public void setAdapter(ArrayAdapter<String> adapter) {
+//                        this.adapter = adapter;
+//                    }
 
                     @Override
                     public void onResponse(JSONObject response) {
                         // Display the first 500 characters of the response string.
-                        mTextView.setText("Response is: " + response.toString());
+                        //mTextView.setText("Response is: " + response.toString());
                         //getJSONArray().getJSONObject(); ref: https://stackoverflow.com/questions/32624166/how-to-get-json-array-within-json-object
                         JSONArray jsonArray = new JSONArray();
                         try {
@@ -84,8 +85,9 @@ public class categories extends ListFragment {
                             e.printStackTrace();
                         }
 
-
+                        Log.d("string", "net voor if");
                         if (jsonArray != null) {
+                            Log.d("string2", "net na if");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 try {
                                     myArray.add(jsonArray.getString(i));
@@ -95,20 +97,63 @@ public class categories extends ListFragment {
                             }
                         }
 
+                        Log.d("myarray", myArray.toString());
 
-                        //ListView list = (ListView) findViewById(R.id.list);
-                        setAdapter(adapter);
+
+
+                        //ListView list1 = (ListView) inflaterCategories.findViewById());
+
+                        //ListView listView = getActivity().findViewById(R.id.@android_id/list);
+                        setListAdapter(adapter);
+
+
 
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        mTextView.setText("That didn't work!");
+                        //mTextView.setText("That didn't work!");
                     }
                 });
 // Add the request to the RequestQueue.
         //MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
         queue.add(jsObjectRequest);
+        //this.setListAdapter(adapter);
+
+
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+        MenuFragment menuFragment = new MenuFragment();
+
+        // nu s nog gehardcoded
+        String s = "entrees";
+        Bundle args = new Bundle();
+        args.putString("category", s);
+        menuFragment.setArguments(args);
+
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, menuFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        // inflater
+        final View inflaterCategories = inflater.inflate(R.layout.fragment_categories, container, false);
+
+        //final TextView mTextView = getListView().findViewById(R.id.textView1);
+
+
+
+        //setAdapter(adapter);
 
 
 //
@@ -126,7 +171,7 @@ public class categories extends ListFragment {
 
 
 // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_categories, container, false);
+        return inflaterCategories;
     }
 
 }
