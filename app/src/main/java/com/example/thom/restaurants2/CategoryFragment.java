@@ -1,6 +1,7 @@
 package com.example.thom.restaurants2;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,7 +36,15 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CategoriesFragment extends ListFragment {
+public class CategoryFragment extends ListFragment {
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        Log.d("test", " onattach");
+        System.out.println(" testfragment");
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +57,8 @@ public class CategoriesFragment extends ListFragment {
 */
 // Instantiate the RequestQueue.
 
+        Log.d(" oncreate", "test");
+
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         String url ="https://resto.mprog.nl/categories";
 
@@ -59,6 +70,8 @@ public class CategoriesFragment extends ListFragment {
                         getActivity(),
                         android.R.layout.simple_list_item_1,
                         myArray);
+
+        //final TextView mTextView = getListView().findViewById(R.id.textView1);
 
 
 
@@ -112,6 +125,7 @@ public class CategoriesFragment extends ListFragment {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+
                         //mTextView.setText("That didn't work!");
                     }
                 });
@@ -119,6 +133,7 @@ public class CategoriesFragment extends ListFragment {
         //MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
         queue.add(jsObjectRequest);
         //this.setListAdapter(adapter);
+
 
 
     }
