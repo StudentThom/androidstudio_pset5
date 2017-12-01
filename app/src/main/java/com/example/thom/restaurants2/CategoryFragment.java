@@ -38,13 +38,6 @@ import java.util.List;
  */
 public class CategoryFragment extends ListFragment {
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        Log.d("test", " onattach");
-        System.out.println(" testfragment");
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
