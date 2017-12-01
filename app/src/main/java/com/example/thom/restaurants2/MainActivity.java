@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,9 +51,17 @@ public class MainActivity extends AppCompatActivity {
 //        OrderFragment fragment2 = new OrderFragment();
 //        fragment2.show(ft2, "dialog");
 
-        RestoDatabase db = RestoDatabase.getInstance(getApplicationContext());
+        final RestoDatabase db = RestoDatabase.getInstance(getApplicationContext());
+        TextView textView = findViewById(R.id.textView1);
+        textView.setText(db.toString());
+        Log.d("db", db.toString());
 
 
+    }
 
+    public void showDialog(View view) {
+        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+        OrderFragment fragment2 = new OrderFragment();
+        fragment2.show(ft2, "dialog");
     }
 }

@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/cancel"
-                android:onClick="cancel_dialog"/>
+                android:onClick="cancel_dialog()"/>
 
             <Button
                 android:id="@+id/button3"

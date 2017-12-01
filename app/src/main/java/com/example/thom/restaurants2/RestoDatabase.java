@@ -1,6 +1,7 @@
 package com.example.thom.restaurants2;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -17,12 +18,11 @@ public class RestoDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table restos (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, completed BIT);");
+        sqLiteDatabase.execSQL("create table restos (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, amount INT, price FLOAT);");
 
         // test data
-        sqLiteDatabase.execSQL("INSERT INTO restos (title, completed) VALUES ('test', 0);");
-        sqLiteDatabase.execSQL("INSERT INTO restos (title, completed) VALUES ('test2', 1);");
-        sqLiteDatabase.execSQL("INSERT INTO restos (title, completed) VALUES ('test3', 0);");
+        sqLiteDatabase.execSQL("INSERT INTO restos (name, amount, price) VALUES ('test1', 2, 3.4);");
+        sqLiteDatabase.execSQL("INSERT INTO restos (name, amount, price) VALUES ('test2', 3, 1.2);");
 
     }
 
@@ -54,4 +54,27 @@ public class RestoDatabase extends SQLiteOpenHelper {
 
         return instance;
     }
+
+    public void AddItem(String name, int amount, Float price) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("INSERT INTO restos (name, amount price) VALUES ( '" + name + " ', '" + amount + "', '" + price + "');" );
+    }
+
+
+    public Cursor selectAll() {
+        //Cursor cursor = null;
+        //Cursor cursor = getWritableDatabase().rawQuery("SELECT * FROM todos");
+        // ref: https://stackoverflow.com/questions/20836968/rawquery-in-android
+        SQLiteDatabase db = this.getReadableDatabase();
+        String categoryID = "1";
+//        String select = "SELECT category_id FROM tblProduct WHERE category_id="+categoryID;
+        String select = "SELECT * FROM restos";
+        Cursor cursor = db.rawQuery(select,new String[]{});
+
+        return cursor;
+
+
+    }
+
 }

@@ -138,7 +138,15 @@ public class CategoryFragment extends ListFragment {
         MenuFragment menuFragment = new MenuFragment();
 
         // nu s nog gehardcoded
-        String s = "entrees";
+
+        String s = null;
+        if (position == 0) {
+            s = "appetizers";
+        }
+        if (position == 1){
+            s = "entrees";
+        }
+
         Bundle args = new Bundle();
         args.putString("category", s);
         menuFragment.setArguments(args);

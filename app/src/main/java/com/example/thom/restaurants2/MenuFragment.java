@@ -37,6 +37,9 @@ public class MenuFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         Bundle arguments = this.getArguments();
+        Log.d("arguments bundle", arguments.toString());
+        final String whatDish = arguments.getString("category");
+        Log.d("whatdish", whatDish);
 
         /*
  Volley things, using ref:
@@ -45,9 +48,6 @@ public class MenuFragment extends ListFragment {
 */
 // Instantiate the RequestQueue.
 
-        Log.d(" oncreate", "test");
-
-        final String whatDish = "entrees";
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         String url ="https://resto.mprog.nl/menu";
@@ -98,7 +98,7 @@ public class MenuFragment extends ListFragment {
 //                                    if (jsonArray.getJSONObject(i).getJSONArray("category") == "entrees") {
 //                                        Log.d("string", "hoi what dish");
 //                                    }
-                                    Log.d("String", jsonArray.getJSONObject(i).getString("category"));
+                                    Log.d("String cat", jsonArray.getJSONObject(i).getString("category"));
                                     if (jsonArray.getJSONObject(i).getString("category").equals("entrees")){
                                         //Log.d("String","TRUE TRUE TRUE");
                                         myArrayEntrees.add(jsonArray.getJSONObject(i).getString("name"));
