@@ -35,6 +35,7 @@ public class OrderFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_order, container, false);
     }
 
@@ -42,14 +43,14 @@ public class OrderFragment extends DialogFragment {
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
     // get all items from the database and link an OrderAdapter to the list view
-        RestoDatabase db = RestoDatabase.getInstance(getContext());
+        RestoDatabase db = RestoDatabase.getInstance(getActivity().getApplicationContext());
         Cursor cursor = db.selectAll();
-        RestoAdapter RestoAdapter = new RestoAdapter(getContext(), cursor);
+        RestoAdapter restoAdapter = new RestoAdapter(getActivity().getApplicationContext(), R.layout.row_orders, cursor, 1);
 
 
         final ListView listView = getView().findViewById(R.id.listOrder);
 
-        listView.setAdapter(RestoAdapter);
+        listView.setAdapter(restoAdapter);
 
 
     }

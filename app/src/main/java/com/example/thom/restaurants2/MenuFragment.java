@@ -1,6 +1,7 @@
 package com.example.thom.restaurants2;
 
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -34,14 +35,102 @@ public class MenuFragment extends ListFragment {
 
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onListItemClick(ListView l, View v, final int position, long id) {
         super.onListItemClick(l, v, position, id);
+
+        Bundle arguments = this.getArguments();
+        final String whatDish = arguments.getString("category");
+        int item_id = 0;
+        if (whatDish.equals("entrees"))
+        {
+            item_id = position + 1;
+        }
+        if (whatDish.equals("appetizers")){
+            item_id = position + 5;
+        }
+       final int item_id_final = item_id;
+
+
+        // get all info from volley
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        String url ="https://resto.mprog.nl/menu";
+        final ArrayList<String> myArray = new ArrayList<>();
+
+        // Request a string response from the provided URL.
+        JsonObjectRequest jsObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // Display the first 500 characters of the response string.
+                        //mTextView.setText("Response is: "+ response.toString());
+                        //getJSONArray().getJSONObject(); ref: https://stackoverflow.com/questions/32624166/how-to-get-json-array-within-json-object
+                        JSONArray jsonArray = new JSONArray();
+                        try {
+                            jsonArray = response.getJSONArray("items");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                        if (jsonArray != null) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                try {
+//                                    if (jsonArray.getJSONObject(i).getJSONArray("category") == "entrees") {
+//                                        Log.d("string", "hoi what dish");
+//                                    }
+                                    // Log.d("String cat", jsonArray.getJSONObject(i).getString("category"));
+                                    //Log.d("String name JSON", jsonArray.getJSONObject(i).getString("name"));
+
+                                    if (jsonArray.getJSONObject(i).getInt("id") == item_id_final){
+                                        Log.d("JSON NAME", jsonArray.getJSONObject(i).getString("name"));
+                                        final String name = jsonArray.getJSONObject(i).getString("name");
+                                        final int price = jsonArray.getJSONObject(i).getInt("price");
+
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            //mTextView.setText("That didn't work!");
+                        }
+                    });
+
+        queue.add(jsObjectRequest);
+
+
+
         // call database to add the item to the order
         RestoDatabase db = RestoDatabase.getInstance(getActivity());
-        String name = "test";
+
+//        if (whatDish.equals("entrees")){
+//            if (position == 0) {
+//                db.AddItem("Spaghetti and Meatballs", 1,1);
+//                myArrayEntrees.add(jsonArray.getJSONObject(i).getString("name"));
+//            }
+//        }
+
+        //Log.d("name after", name);
+
+        String nameItem = "test";
         int amount = 1;
         float price = 2;
-        db.AddItem(name, amount, price);
+        Cursor cursor = db.selectSingle("test");
+        String name = "name";
+        int columnIndex = cursor.getColumnIndex(name);
+        String columnName = cursor.getString(columnIndex);
+        Log.d("string column name", columnName);
+
+
+        db.AddItem(nameItem, amount, price);
     }
 
     @Override
@@ -110,7 +199,7 @@ public class MenuFragment extends ListFragment {
 //                                    if (jsonArray.getJSONObject(i).getJSONArray("category") == "entrees") {
 //                                        Log.d("string", "hoi what dish");
 //                                    }
-                                    Log.d("String cat", jsonArray.getJSONObject(i).getString("category"));
+                                        //Log.d("String cat", jsonArray.getJSONObject(i).getString("category"));
                                     if (jsonArray.getJSONObject(i).getString("category").equals("entrees")){
                                         //Log.d("String","TRUE TRUE TRUE");
                                         myArrayEntrees.add(jsonArray.getJSONObject(i).getString("name"));

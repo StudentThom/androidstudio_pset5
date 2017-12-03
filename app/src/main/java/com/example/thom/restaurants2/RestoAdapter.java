@@ -12,27 +12,39 @@ import android.widget.TextView;
  */
 
 public class RestoAdapter extends ResourceCursorAdapter {
-    public RestoAdapter(Context context, Cursor cursor){
+    public RestoAdapter(Context context, int layout, Cursor cursor, int flags){
         // TO DO
-        super(context, R.layout.fragment_order, cursor);
+        super(context, R.layout.row_orders, cursor);
 
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        cursor.moveToFirst();
+        //cursor.moveToFirst();
+        // get name
         String name = "name";
         int columnIndex = cursor.getColumnIndex(name);
-        String column_value = cursor.getString(columnIndex);
-        Log.d("string column value", column_value);
+        String columnName = cursor.getString(columnIndex);
+        Log.d("string column name", columnName);
 
-        // get id
-        String column_id = cursor.getString(cursor.getColumnIndex("_id"));
-        // get boolean
-        int columnIndexCompleted = cursor.getColumnIndex("completed");
-        String completedValue = cursor.getString(columnIndexCompleted);
-        Log.d("completed", completedValue);
+        // get amount
+        String amount = cursor.getString(cursor.getColumnIndex("amount"));
+        Log.d("amount", amount);
+
+
+        // get price
+        int columnIndexPrice = cursor.getColumnIndex("price");
+        String price = cursor.getString(columnIndexPrice);
+        Log.d("completed", price);
+
+        // put values in textviews
+        TextView textViewName = view.findViewById(R.id.textViewName);
+        TextView textViewAmount = view.findViewById(R.id.textViewAmount);
+        TextView textViewPrice = view.findViewById(R.id.textViewPrice);
+        textViewName.setText(columnName);
+        textViewPrice.setText(price);
+        textViewAmount.setText(amount);
 
         //TextView textView = listview.findViewById(R.id.textViewRowToDo);
         //textView.setText(column_value);
