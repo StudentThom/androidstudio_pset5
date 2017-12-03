@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,6 +32,17 @@ import java.util.List;
  */
 public class MenuFragment extends ListFragment {
 
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        // call database to add the item to the order
+        RestoDatabase db = RestoDatabase.getInstance(getActivity());
+        String name = "test";
+        int amount = 1;
+        float price = 2;
+        db.AddItem(name, amount, price);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -47,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
         Log.d("test", "test2");
 
         // not sure whether this is in the  right place:
-//        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-//        OrderFragment fragment2 = new OrderFragment();
-//        fragment2.show(ft2, "dialog");
+        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+        OrderFragment fragment2 = new OrderFragment();
+        fragment2.show(ft2, "dialog");
 
         final RestoDatabase db = RestoDatabase.getInstance(getApplicationContext());
         TextView textView = findViewById(R.id.textView1);
