@@ -49,7 +49,7 @@ public class OrderFragment extends DialogFragment {
 
         final ListView listView = getView().findViewById(R.id.listOrder);
 
-        listView.seAdapter(RestoAdapter);
+        listView.setAdapter(RestoAdapter);
 
 
     }
