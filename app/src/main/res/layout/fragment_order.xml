@@ -12,6 +12,13 @@
         android:orientation="vertical">
 
 
+        <TextView
+            android:id="@+id/textViewOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+
         <ListView
             android:id="@+id/listOrder"
             android:layout_width="match_parent"
@@ -26,15 +33,14 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/buttonCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/cancel"
-                android:onClick="cancel_dialog()"/>
+                android:text="@string/cancel" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/buttonPlaceOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
