@@ -84,9 +84,12 @@ public class MenuFragment extends ListFragment {
 
                                     if (jsonArray.getJSONObject(i).getInt("id") == item_id_final){
                                         Log.d("JSON NAME", jsonArray.getJSONObject(i).getString("name"));
-                                        final String name = jsonArray.getJSONObject(i).getString("name");
-                                        final int price = jsonArray.getJSONObject(i).getInt("price");
-
+                                        String name = jsonArray.getJSONObject(i).getString("name");
+                                        int price = jsonArray.getJSONObject(i).getInt("price");
+                                        int id = jsonArray.getJSONObject(i).getInt("id");
+                                        int amount = 1;
+                                        RestoDatabase db = RestoDatabase.getInstance(getActivity());
+                                        db.AddItem(id, name, amount, price); // move naar onresponse
                                     }
 
                                 } catch (JSONException e) {
@@ -109,7 +112,7 @@ public class MenuFragment extends ListFragment {
 
 
         // call database to add the item to the order
-        RestoDatabase db = RestoDatabase.getInstance(getActivity());
+//        RestoDatabase db = RestoDatabase.getInstance(getActivity());
 
 //        if (whatDish.equals("entrees")){
 //            if (position == 0) {
@@ -120,17 +123,17 @@ public class MenuFragment extends ListFragment {
 
         //Log.d("name after", name);
 
-        String nameItem = "test";
-        int amount = 1;
-        float price = 2;
-        Cursor cursor = db.selectSingle("test");
-        String name = "name";
-        int columnIndex = cursor.getColumnIndex(name);
-        String columnName = cursor.getString(columnIndex);
-        Log.d("string column name", columnName);
+//        String nameItem = "test";
+//        int amount = 1;
+//        float price = 2;
+//        Cursor cursor = db.selectSingle("test");
+//        String name = "name";
+//        int columnIndex = cursor.getColumnIndex(name);
+//        String columnName = cursor.getString(columnIndex);
+//        Log.d("string column name", columnName);
 
 
-        db.AddItem(nameItem, amount, price);
+
     }
 
     @Override

@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,18 +49,35 @@ public class OrderFragment extends DialogFragment implements View.OnClickListene
         PlaceOrderButton.setOnClickListener(this);
 
 
-        return inflater.inflate(R.layout.fragment_order, container, false);
+        return inflated;
     }
 
     @Override
     public void onClick(View view) {
+
+        Log.d("on click", "in it!");
+
+        // empty database
+        RestoDatabase db = RestoDatabase.getInstance(getActivity().getApplicationContext());
+        db.deleteAll();
+
+
         switch(view.getId()) {
             case R.id.buttonPlaceOrder:
-                TextView textView = view.findViewById(R.id.textViewOrder);
-                textView.setText("order is placed");
+                Log.d("on click", "placeorder");
+                //TextView textView = (TextView) view.findViewById(R.id.textViewOrder);
+                //textView.setText("order is placed");
                 Log.d("order status: ", "placed");
+            case R.id.buttonCancel:
+                //TextView textView2 = view.findViewById(R.id.textViewOrder);
+                //textView2.setText("order is cancelled");
         }
-    }
+
+
+
+
+        }
+
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {

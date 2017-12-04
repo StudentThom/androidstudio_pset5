@@ -26,6 +26,16 @@
                 tools:layout_editor_absoluteY="220dp" />
 
             <TextView
+                android:id="@+id/textViewId"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="140dp"
+                tools:layout_editor_absoluteY="220dp"
+                android:visibility="invisible"/>
+
+            <TextView
                 android:id="@+id/textViewAmount"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

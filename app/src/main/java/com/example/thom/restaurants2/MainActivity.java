@@ -24,8 +24,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
-                //case R.id.place_order:
-            //todo
+                case R.id.item1:
+
+                    FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+                    OrderFragment fragment2 = new OrderFragment();
+                    fragment2.show(ft2, "dialog");
             }
         return super.onOptionsItemSelected(item);
     }
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.d("test", "test");
+        //final RestoDatabase db = RestoDatabase.getInstance(getApplicationContext());
 
         FragmentManager fm = getSupportFragmentManager();
         Log.d(" manager", fm.toString());
@@ -47,9 +51,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("test", "test2");
 
         // not sure whether this is in the  right place:
-        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-        OrderFragment fragment2 = new OrderFragment();
-        fragment2.show(ft2, "dialog");
+
 
         final RestoDatabase db = RestoDatabase.getInstance(getApplicationContext());
         TextView textView = findViewById(R.id.textView1);
